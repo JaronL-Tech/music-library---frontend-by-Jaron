@@ -1,0 +1,22 @@
+.MusicTable {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    background-color: brown;
+}
+
+table {
+	border: 2px solid forestgreen;
+	width: 800px;
+	height: 200px;
+}
+
+thead {
+	border-bottom: 1px solid black;
+}
+
+tbody {
+	text-align: center;
+}

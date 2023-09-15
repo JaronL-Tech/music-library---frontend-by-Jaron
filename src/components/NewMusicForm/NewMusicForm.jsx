@@ -1,35 +1,67 @@
 import React, { useState } from "react";
 import "./NewMusicForm.css";
+import axios from "axios";
 
-const NewMusicForm = () => {
+const NewMusicForm = ({ onNewSong }) => {
   const [submitting, setSubmitting] = useState(false);
-  const handleSubmit = (e) => {
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [album, setAlbum] = useState("");
+  const [genre, setGenre] = useState("");
+  const [releasedate, setReleaseDate] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+
+    const formData = {
+      title,
+      artist,
+      album,
+      genre,
+      releasedate,
+    };
+    try {
+      const response = await axios.post(
+        "https://localhost:7030/api/Song",
+        formData
+      );
+    } catch (error) {
+      console.warn("Error submitting new Title form", error);
+      if (response.status === 201) {
+        onNewSong();
+      }
+    }
   };
 
   return (
-    <div className="wrapper">
-      <h1>Add a Song</h1>
-      {submitting && <div>Submtting Form...</div>}
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <label>
-            <p>Name</p>
-            <input name="name" />
-            <p>Artist</p>
-            <input name="artist" />
-            <p>Album</p>
-            <input name="album" />
-            <p>Genre</p>
-            <input name="genre" />
-            <p>ReleaseDate</p>
-            <input name="releasedate" />
-          </label>
-        </fieldset>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="flex-item">
+      <h4>Add Song</h4>
+      <div>
+        <label>Title</label>
+        <input value={title} onChange={(e) => settitle(e.target.value)} />
+      </div>
+      <div>
+        <label>Artist</label>
+        <input value={artist} onChange={(e) => setArtist(e.target.value)} />
+      </div>
+      <div>
+        <label>Album</label>
+        <input value={album} onChange={(e) => setAlbum(e.target.value)} />
+      </div>
+      <div>
+        <label>Genre</label>
+        <input value={genre} onChange={(e) => setGenre(e.target.value)} />
+      </div>
+      <div>
+        <label>releasedate</label>
+        <input
+          value={releasedate}
+          onChange={(e) => setReleaseDate(e.target.value)}
+        />
+      </div>
+      <button type="submit">Add Song</button>
+    </form>
   );
 };
 

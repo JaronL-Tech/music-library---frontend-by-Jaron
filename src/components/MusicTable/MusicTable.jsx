@@ -1,9 +1,7 @@
-import initData from "../Data/Data";
+import axios from "axios";
 import "./MusicTable.css";
 
-const MusicTable = () => {
-  const data = initData;
-
+const MusicTable = ({ music }) => {
   return (
     <div className="MusicTable">
       <table>
@@ -17,7 +15,7 @@ const MusicTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((val, key) => (
+          {music.map((val, key) => (
             <tr key={key}>
               <td>{val.song}</td>
               <td>{val.album}</td>
